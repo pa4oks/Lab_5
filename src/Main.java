@@ -1,15 +1,36 @@
+import Comand.Blabla;
+import Comand.base.Command;
+import Comand.Test;
+import Comand.base.Environment;
+
+import java.util.HashMap;
+
+
+
+
+
+import java.util.Scanner;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        //new LabWork(1, Date.from(Instant.now()), 1, )
+        Scanner in = new Scanner(System.in);
+        HashMap<String, Command> map = new HashMap<>();
+        Test.register(map);
+        Blabla.register(map);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        Environment env = new Environment(map);
+
+        while (in.hasNextLine()){
+            String line = in.nextLine();
+            if (map.keySet().contains(line)){
+                Command command = map.get(line);
+                command.execute();
+            }
+            else{
+                System.err.println("Unknown command: " + line);
+            }
+        }
         }
     }
-}
