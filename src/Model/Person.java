@@ -8,8 +8,9 @@ public class Person {
     private Country nationality; //Поле может быть null
     private Location location; //Поле может быть null
 
-    public Person(String name, Color eyeColor, Color hairColor, Country nationality, Location location) {
+    public Person(String name, int weight, Color eyeColor, Color hairColor, Country nationality, Location location) {
         this.name = name;
+        //this.weight = weight;
         this.eyeColor = eyeColor;
         this.hairColor = hairColor;
         this.nationality = nationality;

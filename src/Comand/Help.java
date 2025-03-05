@@ -17,6 +17,6 @@ public class Help extends Command {
 
     @Override
     public String getHelp() {
-        return "this is the list of commands";
+        return "выводит справку по доступным командам";
     }
 }

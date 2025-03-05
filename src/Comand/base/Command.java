@@ -11,7 +11,7 @@ public abstract class Command {
         return name;
     }
 
-    public abstract void execute(); //выполняет команду
+    public abstract void execute() throws IllegalAccessException; //выполняет команду
 
     public abstract String getHelp(); //справка
 
