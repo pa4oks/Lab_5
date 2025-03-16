@@ -1,56 +1,113 @@
 package files;
 
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
-/**
- * Класс, который читает данные из CSV-файла, заполняет коллекцию, и позволяет записывать
- * коллекцию обратно в файл. Имя файла передается как аргумент командной строки.
- */
+import Model.Coordinates;
+import Model.Difficulty;
+import Model.LabWork;
+import Model.Person;
+
+import Model.*; // Импортируем все классы из пакета Model
+import java.io.*;
+import java.nio.charset.Charset;
+import java.util.*;
+
 public class CSVCollectionManager {
+    private List<LabWork> dataCollection; // Коллекция для хранения LabWork
+    private String filePath;
+    private String delimiter;
 
-    private List<String[]> dataCollection; // Коллекция для хранения данных
-    private String filePath;              // Путь к файлу CSV
-    private String delimiter;             // Разделитель полей в CSV
-
-    /**
-     * Конструктор класса CSVCollectionManager.
-     *
-     * @param filePath  Путь к файлу CSV. Передаётся как аргумент командной строки.
-     * @param delimiter Разделитель полей в CSV-файле (например, "," или ";").
-     */
     public CSVCollectionManager(String filePath, String delimiter) {
         this.filePath = filePath;
         this.delimiter = delimiter;
-        this.dataCollection = new ArrayList<>(); // Инициализация коллекции
-        loadDataFromFile();                       // Загрузка данных из файла при создании экземпляра
+        this.dataCollection = new ArrayList<>();
+        loadDataFromFile();
     }
 
-    /**
-     * Загружает данные из CSV-файла в коллекцию dataCollection.
-     * Обрабатывает ошибки, такие как FileNotFoundException и IOException.
-     */
+    public List<LabWork> getDataCollectionLabWork() {
+        return dataCollection;
+    }
+
     private void loadDataFromFile() {
         Scanner scanner = null;
         try {
-            scanner = new Scanner(new java.io.File(filePath), Charset.forName("UTF-8"));
-            scanner.useDelimiter(delimiter + System.lineSeparator());
+            scanner = new Scanner(new File(filePath), Charset.forName("UTF-8"));
+            scanner.useDelimiter(System.lineSeparator());
+
+            // Пропускаем строку заголовка
+            if (scanner.hasNext()) {
+                scanner.next();
+            }
 
             while (scanner.hasNext()) {
                 String line = scanner.next();
                 String[] values = line.split(delimiter);
-                dataCollection.add(values);
+
+                if (values.length == 14) { // Ожидаем 14 значений
+                    try {
+                        String name = values[0];
+                        float coordinatesX = Float.parseFloat(values[1]);
+                        float coordinatesY = Float.parseFloat(values[2]);
+                        Double minimalPoint = Double.parseDouble(values[3]);
+                        Difficulty difficulty = Difficulty.valueOf(values[4]);
+
+                        String personName = values[5];
+                        int weight = Integer.parseInt(values[6]);
+                        Color eyeColor = Color.valueOf(values[7]);
+                        Color hairColor = (values[8].isEmpty()) ? null : Color.valueOf(values[8]);
+                        Country nationality = (values[9].isEmpty()) ? null : Country.valueOf(values[9]);
+
+                        long locationX = Long.parseLong(values[10]);
+                        Integer locationY = Integer.parseInt(values[11]);
+                        Float locationZ = Float.parseFloat(values[12]);
+                        String locationName = values[13];
+
+                        // Создаем объект Coordinates
+                        Coordinates coordinates = new Coordinates();
+                        coordinates.setX(coordinatesX);
+                        coordinates.setY(coordinatesY);
+
+                        // Создаем объект Location
+                        Location location = new Location();
+                        location.setX(locationX);
+                        location.setY(locationY);
+                        location.setZ(locationZ);
+                        location.setName(locationName);
+
+                        // Создаем объект Person
+                        Person person = new Person();
+                        person.setLocation(location);
+                        person.setName(personName);
+                        person.setWeight(weight);
+                        person.setEyeColor(eyeColor);
+                        person.setHairColor(hairColor);
+                        person.setNationality(nationality);
+
+                        LabWork labWork = new LabWork();
+                        labWork.setName(name);
+                        labWork.setCoordinates(coordinates);
+                        labWork.setAuthor(person);
+                        labWork.setDifficulty(difficulty);
+                        labWork.setMinimalPoint(minimalPoint);
+
+                        dataCollection.add(labWork);
+
+                    } catch (NumberFormatException e) {
+                        System.err.println("Ошибка преобразования числа: " + e.getMessage());
+                    } catch (IllegalArgumentException e) {
+                        System.err.println("Неверное значение enum или нарушение ограничения: " + e.getMessage());
+                    } catch (IllegalAccessException e) {
+                        System.err.println("Ошибка установки поля: " + e.getMessage());
+                    } catch (Exception e) {
+                        System.err.println("Общая ошибка при чтении данных: " + e.getMessage());
+                    }
+                } else {
+                    System.err.println("Неверное количество столбцов в строке: " + line);
+                }
             }
-
             System.out.println("Данные успешно загружены из файла: " + filePath);
-
         } catch (FileNotFoundException e) {
             System.err.println("Ошибка: Файл не найден: " + filePath);
         } catch (NoSuchElementException e) {
@@ -64,53 +121,35 @@ public class CSVCollectionManager {
         }
     }
 
-    /**
-     * Получает коллекцию данных.
-     *
-     * @return List<String[]> Коллекция данных.
-     */
-    public List<String[]> getDataCollection() {
-        return dataCollection;
-    }
-
-    /**
-     * Устанавливает коллекцию данных.
-     *
-     * @param dataCollection Новая коллекция данных.
-     */
-    public void setDataCollection(List<String[]> dataCollection) {
-        this.dataCollection = dataCollection;
-    }
-
-
-    /**
-     * Записывает данные из коллекции в CSV-файл, используя BufferedOutputStream.
-     *
-     * @param appendToFile  true, если нужно добавить данные в конец файла, false, если нужно перезаписать файл.
-     * @return true в случае успешной записи, false в случае ошибки.
-     */
     public boolean saveDataToFile(boolean appendToFile) {
         BufferedOutputStream bos = null;
-
         try {
             bos = new BufferedOutputStream(new FileOutputStream(filePath, appendToFile));
 
-            for (String[] row : dataCollection) {
+            // Записываем строку заголовка
+            String header = "name,coordinatesX,coordinatesY,weight,eyeColor,hairColor,nationality,locationX,locationY,locationZ,locationName" + System.lineSeparator();
+            bos.write(header.getBytes(Charset.forName("UTF-8")));
+
+            for (LabWork labWork : dataCollection) {
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < row.length; i++) {
-                    sb.append(row[i]);
-                    if (i < row.length - 1) {
-                        sb.append(delimiter);
-                    }
-                }
+                sb.append(labWork.getName()).append(delimiter);
+                sb.append(labWork.getCoordinates().getX()).append(delimiter);
+                sb.append(labWork.getCoordinates().getY()).append(delimiter);
+                sb.append(labWork.getAuthor().getWeight()).append(delimiter);
+                sb.append(labWork.getAuthor().getEyeColor()).append(delimiter);
+                sb.append(labWork.getAuthor().getHairColor()).append(delimiter);
+                sb.append(labWork.getAuthor().getNationality()).append(delimiter);
+                sb.append(labWork.getAuthor().getLocation().getX()).append(delimiter);
+                sb.append(labWork.getAuthor().getLocation().getY()).append(delimiter);
+                sb.append(labWork.getAuthor().getLocation().getZ()).append(delimiter);
+                sb.append(labWork.getAuthor().getLocation().getName());
                 sb.append(System.lineSeparator());
+
                 byte[] bytes = sb.toString().getBytes(Charset.forName("UTF-8"));
                 bos.write(bytes);
             }
-
             System.out.println("Данные успешно записаны в файл: " + filePath);
             return true;
-
         } catch (FileNotFoundException e) {
             System.err.println("Ошибка: Невозможно создать/открыть файл для записи: " + filePath);
             return false;
@@ -133,13 +172,4 @@ public class CSVCollectionManager {
             }
         }
     }
-
-
-    /**
-     * Главный метод программы.
-     * Загружает данные из файла, указанного в аргументах командной строки,
-     * выводит их на экран и записывает обратно в файл.
-     *
-     * @param args Аргументы командной строки.  Ожидается один аргумент: путь к CSV файлу.
-     */
 }

@@ -16,8 +16,18 @@ public interface ReaderCreator {
         System.out.println("Введите информацию о человеке: ");
         System.out.println("Введите имя: ");
         personNew.setName(in.nextLine());
-        System.out.println("Введите вес: ");
-        personNew.setWeight(Integer.parseInt(in.nextLine()));
+        int selectedWeight = 0;
+
+        while (selectedWeight == 0) {
+            System.out.println("Введите вес: ");
+            try {
+                selectedWeight = Integer.parseInt(in.nextLine());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: Некорректный ввод веса. Пожалуйста, введите еще раз");
+            }
+        }
+        personNew.setWeight(selectedWeight);
+
 
         Color selectedEyeColor = null;
 

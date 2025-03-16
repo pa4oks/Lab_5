@@ -3,6 +3,7 @@ import Comand.Help;
 import Comand.base.Command;
 import Comand.Test;
 import Comand.base.CommandManager;
+import Model.LabWork;
 import files.CSVCollectionManager;
 
 
@@ -19,7 +20,34 @@ import static Comand.base.CommandManager.commandList;
 public class Main {
     public static void main(String[] args) throws IllegalAccessException {
         //new LabWork(1, Date.from(Instant.now()), 1, )
-        Scanner in = new Scanner(System.in);
+
+
+        //String filePath = "D:/Word_documents/file_proga.csv";  // args[0] Получаем путь к файлу из аргументов командной строки
+        Scanner in = new Scanner(System.in);  // Создаем Scanner для чтения из консоли
+
+        System.out.println("Введите путь к файлу CSV: ");
+        String filePath = in.nextLine();  // Читаем путь к файлу из консоли
+
+        System.out.println("Введите разделитель: ");
+        String delimiter = in.nextLine();  // Читаем разделитель из консоли
+
+        CSVCollectionManager manager = new CSVCollectionManager(filePath, delimiter);
+
+        // Получаем коллекцию LabWork из CSVCollectionManager
+        List<LabWork> labWorks = manager.getDataCollectionLabWork();
+
+        // Пример использования данных (вывод информации о первом LabWork):
+        if (!labWorks.isEmpty()) {
+            System.out.println("Информация о первом LabWork:");
+            LabWork firstLabWork = labWorks.get(0);
+            firstLabWork.print();  // Используем метод print() из LabWork
+        } else {
+            System.out.println("Данные LabWork не загружены.");
+        }
+
+        // Пример сохранения данных (перезапись):
+        // manager.saveDataToFile(false); // false = перезапись, true = добавление
+
         HashMap<String, Command> map = new HashMap<>();
         /*Test.register(map);
         Help.register(map);
@@ -36,37 +64,7 @@ public class Main {
                 System.err.println("Unknown command: " + line);
             }
         }
-
-        if (args.length != 1) {
-            System.err.println("Использование: java CSVCollectionManager <путь_к_csv_файлу>");
-            return;
-        }
-
-        String filePath = "D:/Word_documents/file_proga.csv";  // args[0] Получаем путь к файлу из аргументов командной строки
-        String delimiter = ",";      // Разделитель по умолчанию
-
-        CSVCollectionManager manager = new CSVCollectionManager(filePath, delimiter);
-        List<String[]> data = manager.getDataCollection();
-
-        if (data != null && !data.isEmpty()) {
-            System.out.println("Содержимое коллекции:");
-            for (String[] row : data) {
-                for (String value : row) {
-                    System.out.print(value + "\t");
-                }
-                System.out.println();
-            }
-
-            boolean saveResult = manager.saveDataToFile(false); //Перезаписываем файл
-            if (saveResult) {
-                System.out.println("Коллекция успешно сохранена в файл: " + filePath);
-            } else {
-                System.err.println("Не удалось сохранить коллекцию в файл: " + filePath);
-            }
-
-        } else {
-            System.err.println("Коллекция пуста или не удалось загрузить данные из файла: " + filePath);
-        }
-
-        }
     }
+}
+//     java Main "D:/Word_documents/file_proga_g.csv" ";"
+//     D:/Word_documents/file_proga_g.csv
