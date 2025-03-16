@@ -135,6 +135,9 @@ public class CSVCollectionManager {
                 sb.append(labWork.getName()).append(delimiter);
                 sb.append(labWork.getCoordinates().getX()).append(delimiter);
                 sb.append(labWork.getCoordinates().getY()).append(delimiter);
+                sb.append(labWork.getMinimalPoint()).append(delimiter);
+                sb.append(labWork.getDifficulty()).append(delimiter);
+                sb.append(labWork.getAuthor().getName()).append(delimiter);
                 sb.append(labWork.getAuthor().getWeight()).append(delimiter);
                 sb.append(labWork.getAuthor().getEyeColor()).append(delimiter);
                 sb.append(labWork.getAuthor().getHairColor()).append(delimiter);
@@ -142,7 +145,8 @@ public class CSVCollectionManager {
                 sb.append(labWork.getAuthor().getLocation().getX()).append(delimiter);
                 sb.append(labWork.getAuthor().getLocation().getY()).append(delimiter);
                 sb.append(labWork.getAuthor().getLocation().getZ()).append(delimiter);
-                sb.append(labWork.getAuthor().getLocation().getName());
+                sb.append(labWork.getAuthor().getLocation().getName()).append(delimiter);
+
                 sb.append(System.lineSeparator());
 
                 byte[] bytes = sb.toString().getBytes(Charset.forName("UTF-8"));

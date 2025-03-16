@@ -1,35 +1,21 @@
-import Comand.Add;
-import Comand.Help;
-import Comand.base.Command;
-import Comand.Test;
-import Comand.base.CommandManager;
+import Comand.*;
+import Comand.base.*;
 import Model.LabWork;
 import files.CSVCollectionManager;
 
-
 import java.util.HashMap;
-
-
 import java.util.List;
 import java.util.Scanner;
 
-import static Comand.base.CommandManager.commandList;
-
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) throws IllegalAccessException {
-        //new LabWork(1, Date.from(Instant.now()), 1, )
-
-
-        //String filePath = "D:/Word_documents/file_proga.csv";  // args[0] Получаем путь к файлу из аргументов командной строки
-        Scanner in = new Scanner(System.in);  // Создаем Scanner для чтения из консоли
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
 
         System.out.println("Введите путь к файлу CSV: ");
-        String filePath = in.nextLine();  // Читаем путь к файлу из консоли
+        String filePath = in.nextLine();
 
         System.out.println("Введите разделитель: ");
-        String delimiter = in.nextLine();  // Читаем разделитель из консоли
+        String delimiter = in.nextLine();
 
         CSVCollectionManager manager = new CSVCollectionManager(filePath, delimiter);
 
@@ -45,26 +31,41 @@ public class Main {
             System.out.println("Данные LabWork не загружены.");
         }
 
-        // Пример сохранения данных (перезапись):
-        // manager.saveDataToFile(false); // false = перезапись, true = добавление
+        // Создаем CommandManager и передаем ему CSVCollectionManager
+        CommandManager commandManager = new CommandManager(manager);
+        HashMap<String, Command> commandList = commandManager.getCommandList();
 
-        HashMap<String, Command> map = new HashMap<>();
-        /*Test.register(map);
-        Help.register(map);
-        Add.register(map);*/
-        CommandManager commandManagermanager = new CommandManager();
-
-        while (in.hasNextLine()){
+        // Основной цикл обработки команд
+        while (in.hasNextLine()) {
             String line = in.nextLine();
-            if (commandList.keySet().contains(line)){
-                Command command = commandList.get(line);
-                command.execute();
-            }
-            else{
-                System.err.println("Unknown command: " + line);
+            String[] parts = line.split("\\s+", 2); // Разделяем команду и аргументы
+            String commandName = parts[0]; // Имя команды
+            String argument = (parts.length > 1) ? parts[1] : null; // Аргумент (имя файла)
+
+            if (commandList.containsKey(commandName)) {
+                Command command = commandList.get(commandName);
+
+                if (command instanceof Execute_script) { // Используем instanceof для проверки типа
+                    Execute_script executeScriptCommand = (Execute_script) command; // Приводим к типу Execute_script
+                    if (argument != null) {
+                        executeScriptCommand.setFileName(argument); // Устанавливаем имя файла
+                    } else {
+                        System.err.println("Не указано имя файла для execute_script.");
+                        continue; // Переходим к следующей итерации цикла
+                    }
+                }
+
+                try {
+                    command.execute(); // Выполняем команду
+                } catch (IllegalAccessException e) {
+                    System.err.println("Ошибка при выполнении команды " + commandName + ": " + e.getMessage());
+                } catch (Exception e) {
+                    System.err.println("Произошла ошибка при выполнении команды " + commandName + ": " + e.getMessage());
+                }
+            } else {
+                System.err.println("Unknown command: " + commandName);
             }
         }
     }
-}
-//     java Main "D:/Word_documents/file_proga_g.csv" ";"
-//     D:/Word_documents/file_proga_g.csv
+}//    D:/Word_documents/file_proga_g.csv
+//    execute_script D:/Word_documents/script.txt

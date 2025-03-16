@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cfda431-274b-46ae-82f3-f4b5fdd8fe2a" name="Changes" comment="gogogo">
+    <list default="true" id="8cfda431-274b-46ae-82f3-f4b5fdd8fe2a" name="Changes" comment="bomb">
+      <change afterPath="$PROJECT_DIR$/src/Comand/Execute_script.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Comand/Save.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Comand/Update_id.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Comand/Update_id.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Comand/base/ReaderCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Comand/base/ReaderCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Comand/base/CollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Comand/base/CollectionManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Comand/base/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Comand/base/CommandManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/files/CSVCollectionManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/files/CSVCollectionManager.java" afterDir="false" />
     </list>
@@ -86,7 +88,7 @@
       <workItem from="1741154040644" duration="1840000" />
       <workItem from="1741195671883" duration="10195000" />
       <workItem from="1741547803932" duration="3018000" />
-      <workItem from="1741863821668" duration="16299000" />
+      <workItem from="1741863821668" duration="20230000" />
     </task>
     <task id="LOCAL-00001" summary="bupe">
       <option name="closed" value="true" />
@@ -120,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742149314988</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="bomb">
+      <option name="closed" value="true" />
+      <created>1742156345688</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1742156345688</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,6 +141,7 @@
     <MESSAGE value="work started" />
     <MESSAGE value="work is in process" />
     <MESSAGE value="gogogo" />
-    <option name="LAST_COMMIT_MESSAGE" value="gogogo" />
+    <MESSAGE value="bomb" />
+    <option name="LAST_COMMIT_MESSAGE" value="bomb" />
   </component>
 </project>
