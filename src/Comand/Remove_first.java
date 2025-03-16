@@ -10,7 +10,7 @@ public class Remove_first extends Command {
     }
     @Override
     public void execute() throws IllegalAccessException {
-        priorityQueue.remove(0);
+        priorityQueue.poll();
     }
 
     @Override

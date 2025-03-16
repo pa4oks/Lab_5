@@ -1,8 +1,13 @@
 package Model;
 
 public class Coordinates {
-    private float x; //Значение поля должно быть больше -204
-    private float y;
+    private float x=0; //Значение поля должно быть больше -204
+    private float y=0;
+
+   /* public Coordinates(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }*/
 
     public float getX() {
         return x;

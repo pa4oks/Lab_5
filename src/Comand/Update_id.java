@@ -27,8 +27,19 @@ public class Update_id extends Command implements ReaderCreator{
                 lb.setCoordinates(CoordinateReaderCreator());
                 System.out.println("Введите Минимальный Пойнт: ");
                 lb.setMinimalPoint(Double.parseDouble(in.nextLine()));
-                System.out.println("Введите сложность: ");
-                lb.setDifficulty(Difficulty.valueOf(in.nextLine()));
+                Difficulty selectedDifficulty = null;
+                while (selectedDifficulty == null) {
+                    System.out.println("Введите сложность: ");
+                    for (Difficulty difficulty : Difficulty.values()) {
+                        System.out.println(difficulty);
+                    }
+
+                    try {
+                        selectedDifficulty = Difficulty.valueOf(in.nextLine());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Ошибка: Некорректный ввод сложности. Пожалуйста, введите еще раз");
+                    }
+                }
                 lb.setAuthor(PersonReaderCreator());
                 break;
             }

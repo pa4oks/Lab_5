@@ -3,9 +3,7 @@ package Comand;
 import Comand.base.Command;
 import Model.LabWork;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.PriorityQueue;
+import java.util.*;
 
 import static Comand.base.CollectionManager.priorityQueue;
 
@@ -15,15 +13,21 @@ public class Print_descending extends Command {
     }
     @Override
     public void execute() throws IllegalAccessException {
+        // Создаем копию PriorityQueue.  Так как используется naturalOrder(),
+        // нам не нужно передавать компаратор.
         PriorityQueue<LabWork> queueCopy = new PriorityQueue<>(priorityQueue);
 
-        ArrayList<LabWork> reveredQueue = new ArrayList<>();
-        while (!queueCopy.isEmpty()) {
-            reveredQueue.add(queueCopy.poll()); //poll возвращает элемент очереди, удаляя его
-        }
+        // Преобразуем в ArrayList для сортировки
+        List<LabWork> reversedQueue = new ArrayList<>(queueCopy);
 
-        Collections.sort(reveredQueue, Collections.reverseOrder());
-        System.out.println("Элементы в порядке убывания: " + reveredQueue);
+        // Сортируем ArrayList в обратном порядке.  Теперь LabWork должен implements Comparable
+        reversedQueue.sort(Collections.reverseOrder());
+
+        System.out.println("Элементы в порядке убывания: ");
+        for (LabWork labWork : reversedQueue) {
+            labWork.ShowLabWork(labWork);
+            System.out.println();
+        }
     }
 
     @Override

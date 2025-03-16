@@ -6,7 +6,7 @@ import Model.*;
 import java.util.*;
 
 public class CollectionManager implements ReaderCreator{
-    public static PriorityQueue<LabWork> priorityQueue;
+    public static PriorityQueue<LabWork> priorityQueue = new PriorityQueue<>(Comparator.naturalOrder());
     public static PriorityQueue<LabWork> getCollection(){
         return priorityQueue;
     }

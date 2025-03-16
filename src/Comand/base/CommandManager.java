@@ -5,7 +5,7 @@ import Comand.*;
 import java.util.HashMap;
 
 public final class CommandManager {
-    public static HashMap<String, Command> commandList;
+    public static HashMap<String, Command> commandList = new HashMap<>();
 
     public CommandManager() {
         commandList.put("help", new Help());
@@ -21,8 +21,8 @@ public final class CommandManager {
         commandList.put("remove_first", new Remove_first());
         commandList.put("head", new Head());
         commandList.put("remove_lower", new Remove_lower());
-        commandList.put("remove_any_by_author author", new Remove_any_by_author());
-        commandList.put("count_greater_than_minimal_point minimalPoint", new Count_greater_than_minimal_point());
+        commandList.put("remove_any_by_author", new Remove_any_by_author());
+        commandList.put("count_greater_than_minimal_point", new Count_greater_than_minimal_point());
         commandList.put("print_descending", new Print_descending());
     }
 

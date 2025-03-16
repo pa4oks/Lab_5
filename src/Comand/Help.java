@@ -2,6 +2,8 @@ package Comand;
 import Comand.base.*;
 import Comand.base.Command;
 
+import java.util.HashMap;
+
 import static Comand.base.CommandManager.commandList;
 
 public class Help extends Command {
@@ -11,7 +13,7 @@ public class Help extends Command {
     @Override
     public void execute() {
         commandList.forEach((key, command) -> {
-            System.out.println(key + ": " + command);
+            System.out.println(key + ": " + command.getHelp());
         });
     }
 
@@ -19,4 +21,9 @@ public class Help extends Command {
     public String getHelp() {
         return "выводит справку по доступным командам";
     }
+
+   /* public static void register(HashMap<String,Command> stringCommandHashMap) {
+        Help help = new Help();
+        stringCommandHashMap.put(help.getName(), help);
+    }*/
 }
