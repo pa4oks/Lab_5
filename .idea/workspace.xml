@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8cfda431-274b-46ae-82f3-f4b5fdd8fe2a" name="Changes" comment="bomb" />
+    <list default="true" id="8cfda431-274b-46ae-82f3-f4b5fdd8fe2a" name="Changes" comment="bomb">
+      <change afterPath="$PROJECT_DIR$/src/Comand/Exit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Comand/base/CommandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Comand/base/CommandManager.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -80,7 +83,7 @@
       <workItem from="1741154040644" duration="1840000" />
       <workItem from="1741195671883" duration="10195000" />
       <workItem from="1741547803932" duration="3018000" />
-      <workItem from="1741863821668" duration="20423000" />
+      <workItem from="1741863821668" duration="20774000" />
     </task>
     <task id="LOCAL-00001" summary="bupe">
       <option name="closed" value="true" />
@@ -130,7 +133,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742160124785</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="bomb">
+      <option name="closed" value="true" />
+      <created>1742190585430</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1742190585430</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
